@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "recipes")
 public class RecipeEntity {
 
     @Id
@@ -29,6 +30,12 @@ public class RecipeEntity {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
     private Set<IngredientEntity> ingredients;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_categories",
+            joinColumns =@JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<CategoryEntity> categories;
 
     public Long getId() {
         return id;
@@ -124,5 +131,13 @@ public class RecipeEntity {
 
     public void setIngredients(Set<IngredientEntity> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
     }
 }
