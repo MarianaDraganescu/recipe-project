@@ -17,6 +17,8 @@ public class RecipeEntity {
     private String source;
     private String url;
     private String direction;
+
+    @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
     @Lob
