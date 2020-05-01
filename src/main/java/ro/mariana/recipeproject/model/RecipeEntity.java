@@ -1,6 +1,7 @@
 package ro.mariana.recipeproject.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class RecipeEntity {
@@ -23,6 +24,9 @@ public class RecipeEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private NotesEntity notes;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
+    private Set<IngredientEntity> ingredients;
 
     public Long getId() {
         return id;
@@ -110,5 +114,13 @@ public class RecipeEntity {
 
     public void setNotes(NotesEntity notes) {
         this.notes = notes;
+    }
+
+    public Set<IngredientEntity> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<IngredientEntity> ingredients) {
+        this.ingredients = ingredients;
     }
 }
