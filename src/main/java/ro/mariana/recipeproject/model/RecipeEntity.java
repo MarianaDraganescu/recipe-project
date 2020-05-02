@@ -1,6 +1,7 @@
 package ro.mariana.recipeproject.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,8 @@ public class RecipeEntity {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String direction;
 
     @Enumerated(value = EnumType.STRING)
@@ -29,13 +32,13 @@ public class RecipeEntity {
     private NotesEntity notes;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
-    private Set<IngredientEntity> ingredients;
+    private Set<IngredientEntity> ingredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "recipe_categories",
             joinColumns =@JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<CategoryEntity> categories;
+    private Set<CategoryEntity> categories = new HashSet<>();
 
     public Long getId() {
         return id;

@@ -1,6 +1,5 @@
 package ro.mariana.recipeproject.model;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -20,6 +19,18 @@ public class IngredientEntity {
 
     @OneToOne
     private UnitOfMeasureEntity unitOfMeasure;
+
+    public IngredientEntity() {
+    }
+
+    public IngredientEntity(String description,BigDecimal amount,UnitOfMeasureEntity unitOfMeasure,RecipeEntity recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = unitOfMeasure;
+        this.recipe = recipe;
+    }
+
+
 
     public Long getId() {
         return id;
