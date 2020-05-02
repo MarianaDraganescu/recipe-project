@@ -1,11 +1,13 @@
 package ro.mariana.recipeproject.services;
 
+import org.springframework.stereotype.Service;
 import ro.mariana.recipeproject.model.RecipeEntity;
 import ro.mariana.recipeproject.repositories.RecipeRepository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepository recipeRepository;
