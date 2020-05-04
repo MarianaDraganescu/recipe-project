@@ -23,13 +23,11 @@ public class IngredientEntity {
     public IngredientEntity() {
     }
 
-    public IngredientEntity(String description,BigDecimal amount,UnitOfMeasureEntity unitOfMeasure,RecipeEntity recipe) {
+    public IngredientEntity(String description,BigDecimal amount,UnitOfMeasureEntity unitOfMeasure) {
         this.description = description;
         this.amount = amount;
         this.unitOfMeasure = unitOfMeasure;
-        this.recipe = recipe;
     }
-
 
 
     public Long getId() {

@@ -126,6 +126,13 @@ public class RecipeEntity {
 
     public void setNotes(NotesEntity notes) {
         this.notes = notes;
+        notes.setRecipe(this);
+    }
+
+    public RecipeEntity addIngredient(IngredientEntity ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 
     public Set<IngredientEntity> getIngredients() {
