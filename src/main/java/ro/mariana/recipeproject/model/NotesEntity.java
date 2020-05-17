@@ -1,7 +1,12 @@
 package ro.mariana.recipeproject.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 
+@Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 @Table(name = "notes")
 public class NotesEntity {
@@ -16,27 +21,7 @@ public class NotesEntity {
     @Lob
     private String notes;
 
-    public RecipeEntity getRecipe() {
-        return recipe;
+    public NotesEntity() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setRecipe(RecipeEntity recipe) {
-        this.recipe = recipe;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 }

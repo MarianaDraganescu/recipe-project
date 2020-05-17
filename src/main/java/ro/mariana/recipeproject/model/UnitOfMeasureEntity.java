@@ -1,7 +1,10 @@
 package ro.mariana.recipeproject.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "unitofmeasures")
 public class UnitOfMeasureEntity {
@@ -12,19 +15,4 @@ public class UnitOfMeasureEntity {
 
     private String description;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String uom) {
-        this.description = uom;
-    }
 }

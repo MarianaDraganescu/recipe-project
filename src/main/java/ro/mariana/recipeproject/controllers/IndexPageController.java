@@ -1,10 +1,11 @@
 package ro.mariana.recipeproject.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ro.mariana.recipeproject.services.RecipeService;
-
+@Slf4j
 @Controller
 public class IndexPageController {
 
@@ -16,6 +17,7 @@ public class IndexPageController {
 
     @RequestMapping({"","/"})
     public String getIndex(Model model){
+        log.debug("Getting index page");
         model.addAttribute("recipes",recipeService.getRecipes());
         return "index";
     }
