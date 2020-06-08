@@ -6,6 +6,7 @@ import ro.mariana.recipeproject.model.RecipeEntity;
 import ro.mariana.recipeproject.repositories.RecipeRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 @Slf4j
 @Service
@@ -26,4 +27,18 @@ public class RecipeServiceImpl implements RecipeService{
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
         return recipeSet;
     }
+
+    @Override
+    public RecipeEntity findById(Long id) {
+
+        Optional<RecipeEntity> optionalRecipe = recipeRepository.findById(id);
+
+        if(!optionalRecipe.isPresent()){
+            throw new RuntimeException("Recipe not found!");
+        }
+
+        return optionalRecipe.get();
+    }
+
+
 }
