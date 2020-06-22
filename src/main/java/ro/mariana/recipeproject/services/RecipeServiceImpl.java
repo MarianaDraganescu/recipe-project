@@ -2,6 +2,9 @@ package ro.mariana.recipeproject.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ro.mariana.recipeproject.converters.RecipeCommandToRecipeEntity;
+import ro.mariana.recipeproject.converters.RecipeEntityToRecipeCommand;
+import ro.mariana.recipeproject.dto.RecipeCommand;
 import ro.mariana.recipeproject.model.RecipeEntity;
 import ro.mariana.recipeproject.repositories.RecipeRepository;
 
@@ -13,9 +16,16 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipeEntity recipeCommandToRecipeEntity;
+    private final RecipeEntityToRecipeCommand recipeEntityToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             RecipeCommandToRecipeEntity recipeCommandToRecipeEntity,
+                             RecipeEntityToRecipeCommand recipeEntityToRecipeCommand) {
+
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipeEntity = recipeCommandToRecipeEntity;
+        this.recipeEntityToRecipeCommand = recipeEntityToRecipeCommand;
     }
 
 
@@ -40,5 +50,14 @@ public class RecipeServiceImpl implements RecipeService{
         return optionalRecipe.get();
     }
 
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        RecipeEntity convertedRecipe = recipeCommandToRecipeEntity.convert(command);
 
+        RecipeEntity savedRecipe = recipeRepository.save(convertedRecipe);
+        log.debug("Saved RecipeId:" + savedRecipe.getId());
+
+
+        return recipeEntityToRecipeCommand.convert(savedRecipe);
+    }
 }
