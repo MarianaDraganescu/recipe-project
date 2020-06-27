@@ -2,6 +2,7 @@ package ro.mariana.recipeproject.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.mariana.recipeproject.converters.RecipeCommandToRecipeEntity;
 import ro.mariana.recipeproject.converters.RecipeEntityToRecipeCommand;
 import ro.mariana.recipeproject.dto.RecipeCommand;
@@ -59,5 +60,10 @@ public class RecipeServiceImpl implements RecipeService{
 
 
         return recipeEntityToRecipeCommand.convert(savedRecipe);
+    }
+
+    @Transactional
+    public RecipeCommand findCommandById(Long id) {
+        return recipeEntityToRecipeCommand.convert(findById(id)) ;
     }
 }
