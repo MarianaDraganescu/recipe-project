@@ -73,4 +73,27 @@ class RecipeControllerTest {
                 .andExpect(view().name("redirect:/recipe/show/2"));
     }
 
+    @Test
+    public void updateRecipe_whenUpdatingArecipe_newFormAppears() throws Exception {
+        RecipeCommand command = new RecipeCommand();
+        command.setId(1L);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(command);
+
+        mockMvc.perform(post("/recipes/1/update"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"));
+
+        verify(recipeService).findCommandById(1L);
+    }
+
+    @Test
+    public void deleteRecipe_whenDeletingArecipe_aRedirectToMainFormHappens() throws Exception {
+        mockMvc.perform(get("/recipes/1/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+
+        verify(recipeService).deleteById(anyLong());
+    }
+
 }

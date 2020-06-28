@@ -66,4 +66,16 @@ public class RecipeServiceImplTest {
 
 
     //TODO add test to verify throwing the exception
+
+    @Test
+    public void deleteById_whenDeletingRecipeById_true(){
+        Long idToDelete = 1L;
+
+        recipeService.deleteById(idToDelete);
+
+        //no "when",since method has void return type
+
+        verify(recipeRepository,times(1)).deleteById(anyLong());
+
+    }
 }
