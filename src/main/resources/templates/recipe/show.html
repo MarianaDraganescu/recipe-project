@@ -82,7 +82,15 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Ingredients</h1>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h1 class="panel-title">Ingredients</h1>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default" href="#"
+                                   th:href="@{'/recipes/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -90,7 +98,9 @@
                                 <ul th:each="ingredient : ${recipe.ingredients}">
                                     <li th:text="${ingredient.getAmount() + ' '
                                     + ingredient.unitOfMeasure.getDescription() + ' - '
-                                    + ingredient.description}">Looped through ingredients and displayed them dynamically!</li>
+                                    + ingredient.description}">Looped through ingredients and displayed them
+                                        dynamically!
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -98,7 +108,7 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Directions</h1>
+                        <h1 class="panel-title">Directions</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -110,7 +120,7 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title" >Notes</h1>
+                        <h1 class="panel-title">Notes</h1>
                     </div>
                     <div class="panel-body">
                         <div class="row">
