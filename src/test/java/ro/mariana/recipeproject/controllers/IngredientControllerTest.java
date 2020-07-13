@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ro.mariana.recipeproject.dto.RecipeCommand;
 import ro.mariana.recipeproject.services.IngredientService;
 import ro.mariana.recipeproject.services.RecipeService;
+import ro.mariana.recipeproject.services.UnitOfMeasureService;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -27,6 +28,9 @@ public class IngredientControllerTest {
     @Mock
     private IngredientService ingredientService;
 
+    @Mock
+    private UnitOfMeasureService unitOfMeasureService;
+
     private IngredientController ingredientController;
 
     private MockMvc mockMvc;
@@ -34,7 +38,7 @@ public class IngredientControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        ingredientController = new IngredientController(recipeService,ingredientService);
+        ingredientController = new IngredientController(recipeService,ingredientService,unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
