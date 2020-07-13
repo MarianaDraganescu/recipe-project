@@ -47,6 +47,6 @@ public class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/list"))
                 .andExpect(model().attributeExists("recipe"));
 
-        verify(recipeService.findCommandById(anyLong()));
+        verify(recipeService).findCommandById(anyLong());
     }
 }

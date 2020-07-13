@@ -22,7 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class IndexPageControllerTest {
 
-    IndexPageController indexPageController;
+    private IndexPageController indexPageController;
+
+    private MockMvc mockMvc;
 
     @Mock
     RecipeService recipeService;
@@ -33,13 +35,13 @@ public class IndexPageControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
         indexPageController = new IndexPageController(recipeService);
+        mockMvc = MockMvcBuilders.standaloneSetup(indexPageController).build();
     }
 
     @Test
     public void testMockMVC() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexPageController).build();
+        when(recipeService.getRecipes()).thenReturn(new HashSet<>());
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
