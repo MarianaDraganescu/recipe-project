@@ -2,6 +2,7 @@ package ro.mariana.recipeproject.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.mariana.recipeproject.converters.IngredientCommandToIngredientEntity;
 import ro.mariana.recipeproject.converters.IngredientEntityToIngredientCommand;
 import ro.mariana.recipeproject.dto.IngredientCommand;
@@ -19,18 +20,15 @@ public class IngredientService {
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final IngredientCommandToIngredientEntity ingredientCommandToIngredientEntity;
-    private final IngredientEntityToIngredientCommand ingredientEntityToIngredientCommand;
 
     public IngredientService(IngredientEntityToIngredientCommand converter,
                              RecipeRepository recipeRepository,
                              UnitOfMeasureRepository unitOfMeasureRepository,
-                             IngredientCommandToIngredientEntity ingredientCommandToIngredientEntity,
-                             IngredientEntityToIngredientCommand ingredientEntityToIngredientCommand) {
+                             IngredientCommandToIngredientEntity ingredientCommandToIngredientEntity) {
         this.converter = converter;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.ingredientCommandToIngredientEntity = ingredientCommandToIngredientEntity;
-        this.ingredientEntityToIngredientCommand = ingredientEntityToIngredientCommand;
     }
 
 
@@ -56,6 +54,7 @@ public class IngredientService {
         return ingredientCommandOptional.get();
     }
 
+    @Transactional
     public IngredientCommand saveOrUpdateIngredient(IngredientCommand command){
         //get the recipe from repository with the id camed from UI
         Optional<RecipeEntity> recipeOptional = recipeRepository.findById(command.getRecipeId());
@@ -87,7 +86,7 @@ public class IngredientService {
             RecipeEntity savedRecipe = recipeRepository.save(recipe);
 
             //todo check for  fail
-            return ingredientEntityToIngredientCommand.convert(savedRecipe.getIngredients()
+            return converter.convert(savedRecipe.getIngredients()
                     .stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
                     .findFirst()
