@@ -1,10 +1,12 @@
 package ro.mariana.recipeproject.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "unitofmeasures")
 public class UnitOfMeasureEntity {
