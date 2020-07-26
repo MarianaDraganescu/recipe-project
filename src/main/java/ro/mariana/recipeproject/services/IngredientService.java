@@ -79,18 +79,29 @@ public class IngredientService {
                                 .orElseThrow(()-> new RuntimeException("UOM not found"))); //todo address this
             } else {
                 //add new ingredient (SAVE) to recipe
-
-                recipe.addIngredient(ingredientCommandToIngredientEntity.convert(command));
+                IngredientEntity ingredientEntity = new IngredientEntity();
+                ingredientEntity.setRecipe(recipe);
+                recipe.addIngredient(ingredientEntity);
             }
 
             RecipeEntity savedRecipe = recipeRepository.save(recipe);
 
-            //todo check for  fail
-            return converter.convert(savedRecipe.getIngredients()
-                    .stream()
+            Optional<IngredientEntity> savedIngredientOptional = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
-                    .findFirst()
-                    .get());
+                    .findFirst();
+
+            //check by description
+            if(!savedIngredientOptional.isPresent()){
+                //not totally safe... But best guess
+                savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
+                        .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
+                        .filter(recipeIngredients -> recipeIngredients.getUnitOfMeasure().getId().equals(command.getUom().getId()))
+                        .findFirst();
+            }
+
+            //to do check for fail
+            return converter.convert(savedIngredientOptional.get());
         }
     }
 }
