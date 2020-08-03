@@ -79,7 +79,7 @@ public class IngredientService {
                                 .orElseThrow(()-> new RuntimeException("UOM not found"))); //todo address this
             } else {
                 //add new ingredient (SAVE) to recipe
-                IngredientEntity ingredientEntity = new IngredientEntity();
+                IngredientEntity ingredientEntity = ingredientCommandToIngredientEntity.convert(command);
                 ingredientEntity.setRecipe(recipe);
                 recipe.addIngredient(ingredientEntity);
             }

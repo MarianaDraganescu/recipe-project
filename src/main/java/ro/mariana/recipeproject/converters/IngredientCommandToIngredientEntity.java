@@ -4,6 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import ro.mariana.recipeproject.dto.IngredientCommand;
 import ro.mariana.recipeproject.model.IngredientEntity;
+import ro.mariana.recipeproject.model.RecipeEntity;
 
 @Component
 public class IngredientCommandToIngredientEntity implements Converter<IngredientCommand, IngredientEntity> {
@@ -22,8 +23,15 @@ public class IngredientCommandToIngredientEntity implements Converter<Ingredient
 
         final IngredientEntity ingredientEntity = new IngredientEntity();
         ingredientEntity.setId(source.getId());
-        ingredientEntity.setDescription(source.getDescription());
+        if(source.getRecipeId() != null){
+            RecipeEntity recipe = new RecipeEntity();
+            recipe.setId(source.getRecipeId());
+            ingredientEntity.setRecipe(recipe);
+            recipe.addIngredient(ingredientEntity);
+        }
+
         ingredientEntity.setAmount(source.getAmount());
+        ingredientEntity.setDescription(source.getDescription());
         ingredientEntity.setUnitOfMeasure(unitOfMeasureConverter.convert(source.getUom()));
 
         return ingredientEntity;
