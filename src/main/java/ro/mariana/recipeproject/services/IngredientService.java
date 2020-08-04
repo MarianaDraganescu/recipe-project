@@ -104,4 +104,29 @@ public class IngredientService {
             return converter.convert(savedIngredientOptional.get());
         }
     }
+
+
+    public void deleteById(Long recipeId, Long ingredientId) {
+
+        Optional<RecipeEntity> recipeEntityOptional = recipeRepository.findById(recipeId);
+
+        if(recipeEntityOptional.isPresent()){
+            RecipeEntity recipe = recipeEntityOptional.get();
+
+            Optional<IngredientEntity> ingredientEntityOptional = recipe.getIngredients()
+                                                                    .stream()
+                                                                    .filter(ingredientEntity -> ingredientEntity.getId().equals(ingredientId))
+                                                                    .findFirst();
+
+            if(ingredientEntityOptional.isPresent()){
+                IngredientEntity ingredientToDelete = ingredientEntityOptional.get();
+                ingredientToDelete.setRecipe(null);
+                recipe.getIngredients().remove(ingredientEntityOptional.get());
+                recipeRepository.save(recipe);
+            }
+        }else {
+            log.debug("Recipe id not found.Id:" + recipeId);
+
+        }
+    }
 }
